@@ -5,13 +5,46 @@ generator client {
 
 datasource db {
   provider  = "postgresql"
-  // url       = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  age   Int?
+    id   String     @id @default(uuid())
+   name  String?
+  avatar String?
+
+  addresses Address[]
+  contacts Contact[]
+
+  createdAt DateTime  @default(now())
+    updatedAt DateTime  @updatedAt
+  }
+
+  model Address {
+  id String @id @default(uuid())
+  userId String
+
+  addressLine1 String
+  addressLine2 String?
+  city String
+  state String?
+  postalCode String
+  country String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  }
+
+  model Contact {
+  id String @id @default(uuid())
+  userId String
+  email String?
+  phone String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@unique([email])
   }

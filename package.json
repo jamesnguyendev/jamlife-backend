@@ -7,9 +7,11 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts",
     "start": "node dist/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1" ,
-    "prisma:setup": "npx prisma generate && npx prisma db push"
-
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "npx prisma generate",
+    "prisma:push": "npx prisma db push",
+    "prisma:migrate": "npx prisma migrate dev",
+    "prisma:deploy": "npx prisma migrate deploy"
   },
   "author": "jamesnguyen",
   "license": "ISC",
